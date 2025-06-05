@@ -15,7 +15,7 @@ jobs:
 
       - name: corepack
         run: |
-          pnpm install --global corepack@latest
+          npm install --global corepack@latest
           corepack enable
         
       - uses: cypress-io/github-action@v6
