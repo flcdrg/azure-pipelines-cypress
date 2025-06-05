@@ -35,7 +35,7 @@ steps:
     displayName: "pnpm install"
 
   - script: |
-      pnpm run cypress:run:ci || true
+      pnpm run cy:run:ci || true
     displayName: "Run Cypress tests"
 
   - task: PublishTestResults@2
