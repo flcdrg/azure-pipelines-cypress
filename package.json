@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "cy:open": "cypress open",
-    "cy:run:ci": "cypress run --quiet --reporter junit --reporter dot",
+    "cy:run:ci": "cypress run --quiet --reporter junit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
