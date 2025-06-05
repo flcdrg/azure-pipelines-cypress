@@ -1,14 +1,14 @@
-describe('template spec', () => {
-  it('passes', () => {
-    cy.visit('https://example.cypress.io')
-  })
-})
+// describe('template spec', () => {
+//   it('passes', () => {
+//     cy.visit('https://example.cypress.io')
+//   })
+// })
 
-describe('My First Test', () => {
-  it('Does not do much!', () => {
-    expect(true).to.equal(false)
-  })
-})
+// describe('My First Test', () => {
+//   it('Does not do much!', () => {
+//     expect(true).to.equal(false)
+//   })
+// })
 
 describe('David Blog', () => {
   it('Navigates to Speaking section', () => {
@@ -16,4 +16,9 @@ describe('David Blog', () => {
     cy.contains('Speaking').click()
     cy.url().should('include', '/speaking')
   })
+
+  it('passes', () => {
+    cy.visit('https://example.cypress.io')
+  })
+
 })
