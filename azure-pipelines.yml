@@ -44,4 +44,6 @@ steps:
       testResultsFiles: 'test-results.xml'
       failTaskOnMissingResultsFile: true
       failTaskOnFailedTests: true
+      testRunTitle: 'Cypress Test Results'
+    condition: succeededOrFailed()
     displayName: "Publish Cypress test results"

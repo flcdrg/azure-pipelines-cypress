@@ -6,4 +6,8 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
   },
+  reporterOptions: {
+    testCaseSwitchClassnameAndName: true,
+    attachments: true,
+  }
 });
