@@ -32,5 +32,16 @@ steps:
 
   - script: |
       pnpm install
-      pnpm run build
-    displayName: "pnpm install and build"
+    displayName: "pnpm install"
+
+  - script: |
+      pnpm run cypress:run:ci || true
+    displayName: "Run Cypress tests"
+
+  - task: PublishTestResults@2
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'test-results.xml'
+      failTaskOnMissingResultsFile: true
+      failTaskOnFailedTests: true
+    displayName: "Publish Cypress test results"

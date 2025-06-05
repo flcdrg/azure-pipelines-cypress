@@ -18,4 +18,5 @@ jobs:
           npm install --global corepack@latest
           corepack enable
         
-      - uses: cypress-io/github-action@v6
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
