@@ -52,4 +52,5 @@ steps:
       failTaskOnMissingResultsFile: true
       failTaskOnFailedTests: false
       testRunTitle: "Cypress Test Results"
+      publishRunAttachments: true
     displayName: "Publish Cypress test results"
