@@ -24,13 +24,13 @@ steps:
 
   - task: Cache@2
     inputs:
-      key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
+      key: 'pnpm2 | "$(Agent.OS)" | pnpm-lock.yaml'
       path: $(pnpm_config_cache)
     displayName: Cache pnpm
 
   - task: Cache@2
     inputs:
-      key: cypress | $(Agent.OS) | pnpm-lock.yaml
+      key: cypress2 | $(Agent.OS) | pnpm-lock.yaml
       path: /home/vsts/.cache/Cypress
       restoreKeys: cypress | $(Agent.OS) | pnpm-lock.yaml
     displayName: Cache Cypress binary
