@@ -9,5 +9,7 @@ module.exports = defineConfig({
   reporterOptions: {
     testCaseSwitchClassnameAndName: true,
     attachments: true,
-  }
+  },
+  video: true,
+  screenshotOnRunFailure: true,
 });
