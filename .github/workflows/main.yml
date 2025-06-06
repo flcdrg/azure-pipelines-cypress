@@ -18,11 +18,15 @@ jobs:
         with:
           node-version: 22.x
 
+      - name: "Script: Dump environment"
+        run: |
+          env -0 | sort -z | tr '\0' '\n'
+
       - name: corepack
         run: |
           npm install --global corepack@latest
           corepack enable
-        
+
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
