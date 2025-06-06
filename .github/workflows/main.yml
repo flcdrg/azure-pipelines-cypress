@@ -30,7 +30,7 @@ jobs:
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
         with:
-          command: pnpm run cy:run:ci || true
+          command: pnpm run cy:run:ci
 
       - name: Publish Test Results
         uses: EnricoMi/publish-unit-test-result-action@v2
