@@ -1,4 +1,3 @@
-
 trigger:
   - main
 
@@ -68,6 +67,7 @@ jobs:
       vmImage: ubuntu-latest
     variables:
       pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
+      DEBUG: "cypress:*"
     steps:
       - script: |
           env -0 | sort -z | tr '\0' '\n'
@@ -79,7 +79,7 @@ jobs:
         displayName: "Install Node.js"
 
       - script: npm install
-        displayName: 'Install npm dependencies'
+        displayName: "Install npm dependencies"
 
       - script: npm run cy:verify
-        displayName: 'Cypress verify'
+        displayName: "Cypress verify"
