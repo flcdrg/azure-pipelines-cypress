@@ -8,49 +8,78 @@ pool:
 variables:
   pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
 
-steps:
-  - script: |
-      env -0 | sort -z | tr '\0' '\n'
-    displayName: "Script: Dump environment"
+jobs:
+  - job: Pnpm_With_Corepack
+    displayName: "Pnpm with Corepack"
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
+    steps:
+      - script: |
+          env -0 | sort -z | tr '\0' '\n'
+        displayName: "Script: Dump environment"
 
-  - task: NodeTool@0
-    inputs:
-      versionSpec: "22.x"
-    displayName: "Install Node.js"
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: "Install Node.js"
 
-  - task: Cache@2
-    inputs:
-      key: 'pnpm2 | "$(Agent.OS)" | pnpm-lock.yaml'
-      path: $(pnpm_config_cache)
-    displayName: Cache pnpm
+      - task: Cache@2
+        inputs:
+          key: 'pnpm2 | "$(Agent.OS)" | pnpm-lock.yaml'
+          path: $(pnpm_config_cache)
+        displayName: Cache pnpm
 
-  - task: Cache@2
-    inputs:
-      key: cypress2 | $(Agent.OS) | pnpm-lock.yaml
-      path: /home/vsts/.cache/Cypress
-      restoreKeys: cypress | $(Agent.OS) | pnpm-lock.yaml
-    displayName: Cache Cypress binary
+      - task: Cache@2
+        inputs:
+          key: cypress2 | $(Agent.OS) | pnpm-lock.yaml
+          path: /home/vsts/.cache/Cypress
+          restoreKeys: cypress | $(Agent.OS) | pnpm-lock.yaml
+        displayName: Cache Cypress binary
 
-  - script: |
-      npm install --global corepack@latest
-      corepack enable
-      pnpm config set store-dir $(pnpm_config_cache)
-    displayName: "Setup pnpm"
+      - script: |
+          npm install --global corepack@latest
+          corepack enable
+          pnpm config set store-dir $(pnpm_config_cache)
+        displayName: "Setup pnpm"
 
-  - script: |
-      pnpm install
-    displayName: "pnpm install"
+      - script: |
+          pnpm install
+        displayName: "pnpm install"
 
-  - script: |
-      pnpm run cy:run:ci || true
-    displayName: "Run Cypress tests"
+      - script: |
+          pnpm run cy:run:ci || true
+        displayName: "Run Cypress tests"
 
-  - task: PublishTestResults@2
-    inputs:
-      testResultsFormat: "JUnit"
-      testResultsFiles: "test-results.xml"
-      failTaskOnMissingResultsFile: true
-      failTaskOnFailedTests: false
-      testRunTitle: "Cypress Test Results"
-      publishRunAttachments: true
-    displayName: "Publish Cypress test results"
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: "JUnit"
+          testResultsFiles: "test-results.xml"
+          failTaskOnMissingResultsFile: true
+          failTaskOnFailedTests: false
+          testRunTitle: "Cypress Test Results"
+          publishRunAttachments: true
+        displayName: "Publish Cypress test results"
+
+  - job: npm
+    displayName: "npm with Corepack"
+    pool:
+      vmImage: ubuntu-latest
+    variables:
+      pnpm_config_cache: $(Pipeline.Workspace)/.pnpm-store
+    steps:
+      - script: |
+          env -0 | sort -z | tr '\0' '\n'
+        displayName: "Script: Dump environment"
+
+      - task: NodeTool@0
+        inputs:
+          versionSpec: "22.x"
+        displayName: "Install Node.js"
+
+      - script: npm ci
+        displayName: 'Install npm dependencies'
+
+      - script: npm run cy:verify
+        displayName: 'Cypress verify'
