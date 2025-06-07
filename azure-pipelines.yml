@@ -63,7 +63,7 @@ jobs:
         displayName: "Publish Cypress test results"
 
   - job: npm
-    displayName: "npm with Corepack"
+    displayName: "npm"
     pool:
       vmImage: ubuntu-latest
     variables:
@@ -78,7 +78,7 @@ jobs:
           versionSpec: "22.x"
         displayName: "Install Node.js"
 
-      - script: npm ci
+      - script: npm install
         displayName: 'Install npm dependencies'
 
       - script: npm run cy:verify
