@@ -90,7 +90,7 @@ jobs:
     variables:
       DEBUG: "cypress:*"
     container:
-      image: ubuntu:24.04
+      image: flcdrg/cypress-container-job:latest
     steps:
       - script: |
           env -0 | sort -z | tr '\0' '\n'
