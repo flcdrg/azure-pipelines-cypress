@@ -48,8 +48,12 @@ jobs:
         displayName: "pnpm install"
 
       - script: |
+          # There is an intentionally failing test, so don't fail build
           pnpm run cy:run:ci || true
         displayName: "Run Cypress tests"
+
+      - script: ls -al
+        displayName: "List files"
 
       - task: PublishTestResults@2
         inputs:
@@ -57,7 +61,7 @@ jobs:
           testResultsFiles: "test-results.xml"
           failTaskOnMissingResultsFile: true
           failTaskOnFailedTests: false
-          testRunTitle: "Cypress Test Results"
+          testRunTitle: "pnpm with Corepack"
           publishRunAttachments: true
         displayName: "Publish Cypress test results"
 
@@ -80,8 +84,21 @@ jobs:
       - script: npm install
         displayName: "Install npm dependencies"
 
-      - script: npm run cy:verify
+      - script: npm run cy:verify || true
         displayName: "Cypress verify"
+
+      - script: ls -al
+        displayName: "List files"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: "JUnit"
+          testResultsFiles: "test-results.xml"
+          failTaskOnMissingResultsFile: true
+          failTaskOnFailedTests: false
+          testRunTitle: "npm"
+          publishRunAttachments: true
+        displayName: "Publish Cypress test results"
 
   - job: npm_inside_container
     displayName: "npm inside container"
@@ -104,5 +121,18 @@ jobs:
       - script: npm install
         displayName: "Install npm dependencies"
 
-      - script: npm run cy:verify
+      - script: npm run cy:verify || true
         displayName: "Cypress verify"
+
+      - script: ls -al
+        displayName: "List files"
+
+      - task: PublishTestResults@2
+        inputs:
+          testResultsFormat: "JUnit"
+          testResultsFiles: "test-results.xml"
+          failTaskOnMissingResultsFile: true
+          failTaskOnFailedTests: false
+          testRunTitle: "npm in container"
+          publishRunAttachments: true
+        displayName: "Publish Cypress test results"
